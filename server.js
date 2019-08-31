@@ -9,7 +9,13 @@ module.exports = server;
 server.get('/projects', (req, res) => {
     Projects.getProjects()
         .then(projects => {
-            res.json(projects)
+            const array = projects.map(project => ({
+                id: project.id,
+                project_name: `${project.project_name}`,
+                project_description: `${project.project_description}`,
+                project_complete: `${project.project_complete === 0 ? false : true}`})
+            )
+            res.json(array)
         })
         .catch(err => {
             console.log(err)
@@ -35,7 +41,7 @@ server.post('/projects', (req, res) => {
 server.get('/resources', (req, res) => {
     Projects.getResources()
         .then(resources => {
-            res.status(resources)
+            res.json(resources)
         })
         .catch(err => {
             console.log(err)
@@ -61,7 +67,15 @@ server.post('/resources', (req, res) => {
 server.get('/tasks', (req, res) => {
     Projects.getTasks()
         .then(tasks => {
-            res.status(tasks)
+            const array = tasks.map(task => ({
+                id: task.id,
+                task_description: `${task.task_description}`,
+                task_notes: `${task.task_notes}`,
+                task_complete: `${task.project_complete === 0 ? false : true}`,
+                project_name: `${task.project_name}`,
+                project_description: `${task.project_description}`})
+            )
+            res.json(array)
         })
         .catch(err => {
             console.log(err)
@@ -79,7 +93,7 @@ server.post('/tasks', (req, res) => {
         .catch(err => {
             console.log(err)
             res.status(500).json({
-                message: "unable to create Task"
+                message: "unable to create task"
             })
         })
 })
