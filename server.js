@@ -18,3 +18,16 @@ server.get('/projects', (req, res) => {
             })
         })
 })
+
+server.post('/projects', (req, res) => {
+    Projects.addProject(req.body)
+        .then(newProject => {
+            res.status(201).json(newProject)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                message: "unable to create project"
+            })
+        })
+})
