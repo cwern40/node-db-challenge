@@ -31,3 +31,55 @@ server.post('/projects', (req, res) => {
             })
         })
 })
+
+server.get('/resources', (req, res) => {
+    Projects.getResources()
+        .then(resources => {
+            res.status(resources)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                message: "unable to retrieve resources"
+            })
+        })
+})
+
+server.post('/resources', (req, res) => {
+    Projects.addResource(req.body)
+        .then(newResource => {
+            res.status(201).json(newResource)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                message: "unable to create resource"
+            })
+        })
+})
+
+server.get('/tasks', (req, res) => {
+    Projects.getTasks()
+        .then(tasks => {
+            res.status(tasks)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                message: "unable to retrieve tasks"
+            })
+        })
+})
+
+server.post('/tasks', (req, res) => {
+    Projects.addTask(req.body)
+        .then(newTask => {
+            res.status(201).json(newTask)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                message: "unable to create Task"
+            })
+        })
+})

@@ -18,7 +18,9 @@ function getProjects() {
 }
 
 function getTasks() {
-    return db('tasks')
+    return db('tasks as t')
+        .join('projects as p', 'p.id', 't.projects_id')
+        .select('t.id', 't.task_description', 't.task_notes', 't.task_complete', 'p.project_name', 'p.project_description')
 }
 
 function addResource(resource) {
